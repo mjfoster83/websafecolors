@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+  <head>
+    <style>
+      rect.bordered {
+        stroke: #E6E6E6;
+        stroke-width:2px;   
+      }
+
+      text.mono {
+        font-size: 9pt;
+        font-family: Consolas, courier;
+        fill: #aaa;
+      }
+
+      text.axis-workweek {
+        fill: #000;
+      }
+
+      text.axis-worktime {
+        fill: #000;
+      }
+    </style>
+    <script src="http://d3js.org/d3.v3.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+
+    <script type="text/javascript">
+      d3.csv("websafe.csv", function(d) {
+  return {
+    X: d.X,
+    Y: d.Y,
+    Color: d.Hex
+  };
+}, function(error, rows) {
+  console.log(rows);
+});
+    </script>
+  </body>
+</html>
