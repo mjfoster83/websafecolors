@@ -1,42 +1,49 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+<!doctype html>
 <html>
-  <head>
-    <style>
-      rect.bordered {
-        stroke: #E6E6E6;
-        stroke-width:2px;   
-      }
+<head>
+<title>Scatterplot of JSON data</title>
+<script type="text/javascript" src="http://d3js.org/d3.v2.min.js"></script>
 
-      text.mono {
-        font-size: 9pt;
-        font-family: Consolas, courier;
-        fill: #aaa;
-      }
+<script type="text/javascript">
+function draw(data) {
+	"use strict";
 
-      text.axis-workweek {
-        fill: #000;
-      }
+	var w=800, h=800;
+	var pad = {left: 20, right: 20, top: 20, bottom: 20};
 
-      text.axis-worktime {
-        fill: #000;
-      }
-    </style>
-    <script src="http://d3js.org/d3.v3.js"></script>
-  </head>
-  <body>
-    <div id="chart"></div>
+	var svg = d3.select("body")
+                .append("svg")
+                  .attr("height", h)
+                  .attr("width", w);
 
-    <script type="text/javascript">
-      d3.csv("websafe.csv", function(d) {
-  return {
-    X: d.X,
-    Y: d.Y,
-    Color: d.Hex
-  };
-}, function(error, rows) {
-  console.log(rows);
-});
-    </script>
-  </body>
+	svg.append("rect")
+		.attr("x", pad.left).attr("y",pad.top)
+		.attr("width", w-(pad.left+pad.right))
+		.attr("height",h-(pad.top+pad.bottom))
+		.attr("stroke", "black")
+		.attr("fill", "rgb(255,255,255)");
+
+
+	var xScale = d3.scale.linear().domain([0, 16]).range([pad.left*2, w-pad.right*2]);
+	var yScale = d3.scale.linear().domain([0, 16]).range([h-pad.bottom*2, pad.top*2]);
+
+	var circles = svg.selectAll("rect")
+						.data(data)
+						.enter()
+                        .append("rect")
+							.attr("x", function(d) { return xScale(d.X); })
+							.attr("y", function(d) { return yScale(d.Y); })
+							.attr("width", 30)
+							.attr("height", 30)
+							.attr("fill", function(d) { return [d.Hex]; })
+							.on("mouseover", function() { d3.select(this).attr("width", 30) })
+							.on("mouseout", function() { d3.select(this).attr("width", 30) });
+}
+</script>
+</head>
+<body>
+<script type="text/javascript">
+	d3.json("websafe.json", draw);
+</script>
+</body>
 </html>
