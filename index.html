@@ -3,24 +3,17 @@
 <head>
 <title>Scatterplot of JSON data</title>
 <script type="text/javascript" src="http://d3js.org/d3.v2.min.js"></script>
-<style>
-	body text {
-	  fill: white;
-	  font: 10px sans-serif;
-	  text-anchor: end;
-	}
-</style>
 <script type="text/javascript">
 function draw(data) {
 	"use strict";
 
-	var w=750, h=725;
+	var w=960, h=500;
 	var pad = {left: 0, right: 0, top: 0, bottom: 0};
 
 	var svg = d3.select("body")
-                .append("svg")
-                  .attr("height", h)
-                  .attr("width", w);
+		.append("svg")
+		.attr("height", h)
+		.attr("width", w);
 
 	svg.append("rect")
 		.attr("x", pad.left).attr("y",pad.top)
@@ -33,23 +26,21 @@ function draw(data) {
 	var yScale = d3.scale.linear().domain([1, 16]).range([h-pad.bottom, pad.top]);
 
 	var circles = svg.selectAll("rect")
-						.data(data)
-						.enter()
-                        .append("rect")
-							.attr("x", function(d) { return xScale(d.X); })
-							.attr("y", function(d) { return yScale(d.Y); })
-							.attr("width", 45)
-							.attr("height", 45)
-							.attr("ry", 7)
-							.attr("rx", 7)
-							.attr("fill", function(d) { return [d.Hex]; })
-							.on("mouseover", function() { d3.select(this).attr("width", 50) })
-							.on("mouseout", function() { d3.select(this).attr("width", 45) });
+		.data(data)
+		.enter()
+		.append("rect")
+		.attr("x", function(d) { return xScale(d.X); })
+		.attr("y", function(d) { return yScale(d.Y); })
+		.attr("width", 57.6)
+		.attr("height", 30)
+		.attr("ry", 7)
+		.attr("rx", 7)
+		.attr("fill", function(d) { return [d.Hex]; })
 							
 	var text = svgContainer.selectAll("text")
-							.data(circleData)
-							.enter()
-							.append("text");
+		.data(circleData)
+		.enter()
+		.append("text");
 }
 </script>
 </head>
