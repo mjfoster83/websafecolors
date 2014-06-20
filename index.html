@@ -9,7 +9,7 @@ function draw(data) {
 	"use strict";
 
 	var w=800, h=800;
-	var pad = {left: 20, right: 20, top: 20, bottom: 20};
+	var pad = {left: 0, right: 0, top: 0, bottom: 0};
 
 	var svg = d3.select("body")
                 .append("svg")
@@ -33,11 +33,13 @@ function draw(data) {
                         .append("rect")
 							.attr("x", function(d) { return xScale(d.X); })
 							.attr("y", function(d) { return yScale(d.Y); })
-							.attr("width", 30)
-							.attr("height", 30)
+							.attr("width", 48)
+							.attr("height", 48)
+							.attr("ry", 5)
+							.attr("rx", 5)
 							.attr("fill", function(d) { return [d.Hex]; })
-							.on("mouseover", function() { d3.select(this).attr("width", 30) })
-							.on("mouseout", function() { d3.select(this).attr("width", 30) });
+							.on("mouseover", function() { d3.select(this).attr("width", 80) })
+							.on("mouseout", function() { d3.select(this).attr("width", 35) });
 }
 </script>
 </head>
